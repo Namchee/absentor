@@ -36,6 +36,7 @@ Sebuah _chatbot_ sederhana untuk melakukan otomatisasi absensi mahasiswa untuk p
 4. Sebisa mungkin, gunakan `snake_case` dalam menamakan _variable_ atau _method_
 5. Sebisa mungkin, berikan komentar pada kode yang anda buat (itu ngapain)
 6. Jelaskan _commit message_ anda sejelas mungkin, bila perlu gunakan _conventional commit_
+7. Apabila anda yakin mengenai pekerjaan anda, mohon _update_ `README.MD` dengan menambahkan nama anda sendiri
 
 Melanggar ketentuan tersebut dapat mengakibatkan _pull request_ anda tertolak :exclamation:
 
