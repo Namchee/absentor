@@ -4,8 +4,10 @@ from discord import Game, Status
 from os import environ
 from dotenv import load_dotenv, find_dotenv
 from gspread import authorize
+from datetime import date
 from src.bot import AbsentorBot
 from src.sheet import Sheet
+from src.model.mahasiswa import Mahasiswa
 
 load_dotenv(find_dotenv())
 
@@ -14,8 +16,9 @@ scope = ['https://spreadsheets.google.com/feeds',
 credentials = Credentials.from_service_account_file('credentials.json', scopes=scope)
 
 gc = authorize(credentials)
-worksheet = gc.open_by_key(environ.get("SHEET_ID"))
-sheet = Sheet(worksheet.get_worksheet(0))
+spreadsheet = gc.open_by_key(environ.get("SHEET_ID"))
+
+sheet = Sheet(spreadsheet, spreadsheet.get_worksheet(0))
 
 bot = Bot(command_prefix="!")
 bot.add_cog(AbsentorBot(bot, sheet))
@@ -33,7 +36,7 @@ async def on_ready():
     await bot.change_presence(status=Status.online, activity=Game(name="Absensi Mahasiswa"))
 
 def main():
-    bot.run(environ.get("DISCORD_TOKEN"))
+    pass
 
 if __name__ == "__main__":
     main()
