@@ -5,8 +5,8 @@ from os import environ
 from dotenv import load_dotenv, find_dotenv
 from gspread import authorize
 from datetime import date
-from src.model.bot import AbsentorBot
-from src.model.sheet import Sheet
+from src.bot import AbsentorBot
+from src.sheet import Sheet
 from src.model.mahasiswa import Mahasiswa
 
 load_dotenv(find_dotenv())
@@ -36,10 +36,7 @@ async def on_ready():
     await bot.change_presence(status=Status.online, activity=Game(name="Absensi Mahasiswa"))
 
 def main():
-    mahasiswa1 = Mahasiswa("2017730017", "Cristopher")
-    mahasiswa2 = Mahasiswa("2017730015", "David Christoper Sentosa")
-
-    sheet.batch_absen(date.today(), [mahasiswa1, mahasiswa2])
+    pass
 
 if __name__ == "__main__":
     main()

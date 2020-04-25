@@ -21,7 +21,7 @@ class Sheet:
         self.worksheet.update_cell(1, 1, 'NPM')
         self.worksheet.update_cell(1, 2, 'Nama')
 
-        self.__format_table()
+        self.__format_headers()
 
     """Get the farthest non-empty column index (inclusive)
 
@@ -58,6 +58,8 @@ class Sheet:
 
         return string
 
+    """Formats the presence mark
+    """
     def __format_mark(self):
         # Mark Formatting (centered 'X')
         mark_format = CellFormat(
@@ -71,15 +73,22 @@ class Sheet:
             ), mark_format)
         ])
 
-    """Formats the table with standard style
+    """Formats the table headers
     """
-    def __format_table(self):
+    def __format_headers(self):
         # Header format (centered and bold)
         header_format = CellFormat(
             textFormat=TextFormat(bold=True),
             horizontalAlignment="CENTER"
         )
 
+        format_cell_ranges(self.worksheet, [
+            ("1", header_format)
+        ])
+
+    """Formats the table's data with standard style
+    """
+    def __format_data(self):
         # NPM Formatting (right-aligned)
         npm_format = CellFormat(
             horizontalAlignment="RIGHT"
@@ -91,7 +100,6 @@ class Sheet:
         )
 
         format_cell_ranges(self.worksheet, [
-            ("1", header_format),
             ("A2:A", npm_format),
             ("B2:B", name_format)
         ])
@@ -161,6 +169,7 @@ class Sheet:
             column_index = self.__get_highest_column() + 1
 
             self.worksheet.update_cell(1, column_index, date_format)
+            self.__format_headers()
 
             column = column_index
         else:
@@ -208,7 +217,7 @@ class Sheet:
 
         self.worksheet.update_cell(row, column, "X")
 
-    """Do a batched absensi (commit many operations at once)
+    """Do a batched presence marking (commit many operations at once)
 
         Params:
             - date {date}: Date object which defines the current date.
@@ -220,7 +229,7 @@ class Sheet:
             self.__absen(date, mahasiswa.npm, mahasiswa.name)
 
         self.__format_mark()
-        self.__format_table()
+        self.__format_data()
 
     """Mark mahasiswa's presence by name
         Only use this method if you only want to update ONE instance.
@@ -235,4 +244,4 @@ class Sheet:
         self.__absen(date, mahasiswa.npm, mahasiswa.name)
 
         self.__format_mark()
-        self.__format_table()
+        self.__format_data()
