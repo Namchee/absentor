@@ -37,7 +37,8 @@ Sebuah _chatbot_ sederhana untuk melakukan otomatisasi absensi mahasiswa untuk p
 5. Sebisa mungkin, berikan komentar pada kode yang anda buat (itu ngapain)
 6. Jelaskan _commit message_ anda sejelas mungkin, bila perlu gunakan _conventional commit_
 7. Apabila anda yakin mengenai pekerjaan anda, mohon _update_ `README.MD` dengan menambahkan nama anda sendiri
-8. :exclamation: JANGAN IKUT MENG-COMMIT TOKEN DAN CREDENTIALS :exclamation:
+8. Namai _branch_ yang dibuat sesuai fitur yang sedang anda kerjakan
+9. :exclamation: JANGAN IKUT MENG-COMMIT TOKEN DAN CREDENTIALS :exclamation:
 
 Melanggar ketentuan tersebut dapat mengakibatkan _pull request_ anda tertolak :exclamation:
 
