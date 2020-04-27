@@ -108,7 +108,7 @@ class Sheet:
         body = {
             "requests": [
                 {
-                    "setBasicFilter": {
+                    "setBasicFilter": { # Sort the value
                         "filter": {
                             "range": {
                                 "sheetId": 0,
@@ -122,6 +122,11 @@ class Sheet:
                                 "sortOrder": "ASCENDING"
                             }]
                         }
+                    }
+                },
+                {
+                    "clearBasicFilter": { # Clean the sort residue
+                        "sheetId": 0
                     }
                 },
                 {
