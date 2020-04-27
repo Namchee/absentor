@@ -6,7 +6,6 @@ from gspread import authorize
 from datetime import date
 from src.bot import AbsentorBot
 from src.sheet import Sheet
-from src.model.mahasiswa import Mahasiswa
 
 load_dotenv(find_dotenv())
 

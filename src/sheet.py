@@ -108,6 +108,23 @@ class Sheet:
         body = {
             "requests": [
                 {
+                    "setBasicFilter": {
+                        "filter": {
+                            "range": {
+                                "sheetId": 0,
+                                "startRowIndex": 0,
+                                "startColumnIndex": 0,
+                                "endRowIndex": self.__get_highest_row(),
+                                "endColumnIndex": self.__get_highest_column(),
+                            },
+                            "sortSpecs": [{
+                                "dimensionIndex": 0,
+                                "sortOrder": "ASCENDING"
+                            }]
+                        }
+                    }
+                },
+                {
                     "autoResizeDimensions": {
                         "dimensions": {
                             "sheetId": 0,
