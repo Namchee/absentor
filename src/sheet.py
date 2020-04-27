@@ -108,6 +108,28 @@ class Sheet:
         body = {
             "requests": [
                 {
+                    "setBasicFilter": { # Sort the value
+                        "filter": {
+                            "range": {
+                                "sheetId": 0,
+                                "startRowIndex": 0,
+                                "startColumnIndex": 0,
+                                "endRowIndex": self.__get_highest_row(),
+                                "endColumnIndex": self.__get_highest_column(),
+                            },
+                            "sortSpecs": [{
+                                "dimensionIndex": 0,
+                                "sortOrder": "ASCENDING"
+                            }]
+                        }
+                    }
+                },
+                {
+                    "clearBasicFilter": { # Clean the sort residue
+                        "sheetId": 0
+                    }
+                },
+                {
                     "autoResizeDimensions": {
                         "dimensions": {
                             "sheetId": 0,
@@ -199,6 +221,13 @@ class Sheet:
             row = row_index
         else:
             row = cell[0].row
+            
+            # Transform the name to UPPERCASE (if the name isn't one)
+            column = cell[0].col
+            val = self.worksheet.cell(row, column + 1).value
+
+            if not val.isupper():
+                self.worksheet.update_cell(row, column + 1, val.upper())
 
         return (row, 1)
 
