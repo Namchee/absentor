@@ -221,6 +221,13 @@ class Sheet:
             row = row_index
         else:
             row = cell[0].row
+            
+            # Transform the name to UPPERCASE (if the name isn't one)
+            column = cell[0].col
+            val = self.worksheet.cell(row, column + 1).value
+
+            if not val.isupper():
+                self.worksheet.update_cell(row, column + 1, val.upper())
 
         return (row, 1)
 
