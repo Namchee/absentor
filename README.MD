@@ -42,6 +42,10 @@ Sebuah _chatbot_ sederhana untuk melakukan otomatisasi absensi mahasiswa untuk p
 
 Melanggar ketentuan tersebut dapat mengakibatkan _pull request_ anda tertolak :exclamation:
 
+## Dokumentasi
+
+[EN](docs/INFO_EN) [ID](docs/INFO_ID)
+
 ## Kontributor
 
 1. Cristopher 'Namchee' - [GitHub](https://github.com/namchee)
