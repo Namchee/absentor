@@ -45,5 +45,6 @@ Melanggar ketentuan tersebut dapat mengakibatkan _pull request_ anda tertolak :e
 ## Kontributor
 
 1. Cristopher 'Namchee' - [GitHub](https://github.com/namchee)
+2. Fariz Armesta - [GitHub](https://github.com/Farizarmesta)
 
 PS: Penambahan kontributor hanya akan dilakukan bila anda melakukan _meaningful commit_ pada project ini
