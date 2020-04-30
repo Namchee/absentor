@@ -44,7 +44,7 @@ Melanggar ketentuan tersebut dapat mengakibatkan _pull request_ anda tertolak :e
 
 ## Dokumentasi
 
-[EN](docs/INFO_EN) [ID](docs/INFO_ID)
+[EN](docs/INFO_EN.MD) [ID](docs/INFO_ID.MD)
 
 ## Kontributor
 
