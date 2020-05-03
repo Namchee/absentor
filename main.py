@@ -23,7 +23,7 @@ bot = Bot(command_prefix="!")
 bot.add_cog(AbsentorBot(bot, sheet))
 
 def main():
-    pass
+    bot.run(environ.get("DISCORD_TOKEN"))
 
 if __name__ == "__main__":
     main()
