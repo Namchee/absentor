@@ -92,11 +92,15 @@ class AbsentorBot(commands.Cog):
             fullname = ctx.author.nick
             id = ctx.author.id
             if server.already_absent(id):
-                await ctx.send('{}, anda sudah absen'.format(ctx.author.mention))
+                await ctx.send('{}, anda sudah absen tidak perlu absen lagi'.format(ctx.author.mention))
             else:
                 nama,npm = fullname.split("-")
-                await ctx.send('{}, anda sudah absen jangan pergi sebelum durasi selesai'.format(ctx.author.mention))
-                server.add_absentee(id, Mahasiswa(npm, nama))
+                npm = npm.replace(" ", "")
+                if len(npm) != 10:
+                    await ctx.send('{}, tolong rubah nickname anda menjadi "nama - npm"'.format(ctx.author.mention))
+                else:
+                    await ctx.send('{}, nama anda sudah diabsen jangan pergi sebelum durasi selesai'.format(ctx.author.mention))
+                    server.add_absentee(id, Mahasiswa(npm, nama))
 
 
     async def handle_mahasiswa_offline(self,server_id):
