@@ -279,4 +279,7 @@ class Sheet:
         _, column = self.__get_date_index(date)
         column_name = self.__colnum_string(column)
 
-        self.worksheet.update('{}1:{}{}'.format(column_name, column_name, self.__get_highest_row()), ' ')
+        self.worksheet.update(
+            '{}1:{}{}'.format(column_name, column_name, self.__get_highest_row()),
+            ''
+        )

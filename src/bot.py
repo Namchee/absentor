@@ -1,6 +1,7 @@
 from threading import Timer
 from discord import Game, Status
 from discord.ext import commands
+from datetime import date
 from src.model.server import Server
 
 class AbsentorBot(commands.Cog):
@@ -49,7 +50,7 @@ class AbsentorBot(commands.Cog):
         Parameters:
             - time {int}: Time limit for an absen session
     """
-    @absentor.command(name='mulai')
+    @absentor.command(name='mulai', aliases=['start'])
     @commands.has_role('@botadmin')
     async def handle_mulai(self, ctx, time: int = 15):
         server = self.servers[ctx.guild.id]
@@ -71,14 +72,14 @@ class AbsentorBot(commands.Cog):
             )
             await ctx.send('Waktu absen = {} menit'.format(time))
 
-    @absentor.command(name='berhenti')
+    @absentor.command(name='berhenti', aliases=['stop'])
     @commands.has_role('@botadmin')
     async def handle_stop(self, ctx):
         server = self.servers[ctx.guild.id]
 
         if server.timer == None:
             await ctx.send(
-                'Maaf {}, namun sedang tidak ada sesi absen yang berlangsung pada server ini 😥'.format(ctx.author.mention)
+                'Maaf {}, namun sedang tidak ada sesi absen yang sedang berlangsung pada server ini 😥'.format(ctx.author.mention)
             )
         else:
             server = self.servers[ctx.guild.id]
@@ -91,7 +92,7 @@ class AbsentorBot(commands.Cog):
             await self.write_to_sheet(ctx, absentee)
 
     async def write_to_sheet(self, ctx, absentee):
-        self.sheet.clear_sheet()
+        self.sheet.clear_absen(date.today())
 
         await ctx.send('Kerjaan David')
 
