@@ -274,3 +274,12 @@ class Sheet:
 
         self.__format_mark()
         self.__format_data()
+
+    def clear_absen(self, date):
+        _, column = self.__get_date_index(date)
+        column_name = self.__colnum_string(column)
+
+        self.worksheet.update(
+            '{}1:{}{}'.format(column_name, column_name, self.__get_highest_row()),
+            ''
+        )

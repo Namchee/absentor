@@ -1,20 +1,27 @@
 class Server:
     def __init__(self, role):
-        self.is_absen = False # State which determines if the server is receiving presence message
-        self.absentee = [] # The current list of absentee ID on an absen session
+        self.absentee = {} # Dictionary of user
+        self.timer = None # Timer object
 
         self.role = role # Role object to be mentioned
 
-    def add_absentee(self, id):
-        self.absentee.append(id)
+    def add_absentee(self, id, mahasiswa):
+        self.absentee[id] = mahasiswa
 
-    def start_absen(self):
-        self.is_absen = True
+    def has_absentee(self, id):
+        return id in self.absentee 
 
-    def stop_absen(self):
-        absentee = self.absentee.copy()
-        
+    def get_absentees(self):
+        return self.absentee
+
+    def start_absen(self, timer):
+        self.timer = timer
+
         self.absentee.clear()
-        self.is_absen = False
+        self.timer.start()
 
-        return absentee
+    def stop_absen(self):        
+        self.timer.cancel()
+        self.timer = None
+        
+        return self.absentee

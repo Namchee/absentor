@@ -3,7 +3,6 @@ from discord.ext.commands import Bot
 from os import environ
 from dotenv import load_dotenv, find_dotenv
 from gspread import authorize
-from datetime import date
 from src.bot import AbsentorBot
 from src.sheet import Sheet
 
