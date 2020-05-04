@@ -51,5 +51,6 @@ Melanggar ketentuan tersebut dapat mengakibatkan _pull request_ anda tertolak :e
 1. Cristopher 'Namchee' - [GitHub](https://github.com/namchee)
 2. Fariz Armesta - [GitHub](https://github.com/Farizarmesta)
 3. Steren Lie - [GitHub](https://github.com/Sterennn)
+4. Stephen Hadi - [Github](https://github.com/stephenhadi)
 
 PS: Penambahan kontributor hanya akan dilakukan bila anda melakukan _meaningful commit_ pada project ini
