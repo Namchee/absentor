@@ -90,12 +90,29 @@ class AbsentorBot(commands.Cog):
             )
         else:
             fullname = ctx.author.nick
-            nama,npm = fullname.split("-")
-            await ctx.send('{}, anda sudah absen jangan pergi sebelum durasi selesai'.format(ctx.author.mention))
-            server.add_absentee({ctx.author, Mahasiswa(npm,nama)})
-            self.handle_mahasiswa_offline(ctx.guild.id)
+            id = ctx.author.id
+            if server.already_absent(id):
+                await ctx.send('{}, anda sudah absen'.format(ctx.author.mention))
+            else:
+                nama,npm = fullname.split("-")
+                await ctx.send('{}, anda sudah absen jangan pergi sebelum durasi selesai'.format(ctx.author.mention))
+                server.add_absentee(id, Mahasiswa(npm, nama))
 
-    def handle_mahasiswa_offline(self,server_id):
-        server = self.server[server_id]
-        channel = client.get_channel(server_id)
-        await channel.send('test')
+    async def handle_mahasiswa_offline(self,server_id):
+        server = self.servers[server_id]
+        guild = self.bot.get_guild(server_id)
+        channel = self.bot.get_channel(695181326793310269)
+        siswa_id_offline = []
+        result = ""
+        for siswa_id in server.get_absentee().keys():
+            member = guild.get_member(siswa_id)
+            if member.status == Status.offline:
+                result += '{}'.format(member.mention)
+                siswa_id_offline.append(siswa_id)
+
+        for siswa_id in siswa_id_offline:
+            server.delete_entry(siswa_id)
+
+        if result != "":
+            result += "\n anda tidak diabsen karena anda offline sebelum durasi berakhir"
+            await channel.send(result)
