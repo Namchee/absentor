@@ -21,7 +21,7 @@ class Server:
         del self.absentee[key]
 
     def get_absentee_value(self):
-        return self.absentee.values()
+        return list(self.absentee.values())
 
     def start_absen(self):
         self.is_absen = True

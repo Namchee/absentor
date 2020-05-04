@@ -98,6 +98,7 @@ class AbsentorBot(commands.Cog):
                 await ctx.send('{}, anda sudah absen jangan pergi sebelum durasi selesai'.format(ctx.author.mention))
                 server.add_absentee(id, Mahasiswa(npm, nama))
 
+
     async def handle_mahasiswa_offline(self,server_id):
         server = self.servers[server_id]
         guild = self.bot.get_guild(server_id)
