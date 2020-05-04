@@ -1,6 +1,0 @@
-credentials.json
-venv
-.env
-.vscode
-
-src/**/__pycache__

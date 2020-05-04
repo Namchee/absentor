@@ -1,12 +1,12 @@
 from discord import Game, Status
 from discord.ext import commands
 from src.model.server import Server
+from src.model.mahasiswa import Mahasiswa
 
 class AbsentorBot(commands.Cog):
     def __init__(self, bot, sheet):
         self.bot = bot
         self.sheet = sheet
-
         self.servers = {}
 
     """On ready, register all guilds state connected to this bot
@@ -48,8 +48,7 @@ class AbsentorBot(commands.Cog):
         Parameters:
             - time {int}: Time limit for an absen session
     """
-    @absentor.command(name='init')
-    @commands.is_owner()
+    @absentor.command(name='mulai')
     @commands.has_role('@botadmin')
     async def handle_init(self, ctx, time: int = 15):
         server = self.servers[ctx.guild.id]
@@ -80,3 +79,23 @@ class AbsentorBot(commands.Cog):
             )
         else:
             print(error)
+
+    @absentor.command(name='absen')
+    @commands.has_role('@siswa')
+    async def handle_mahasiswa_absen(self,ctx):
+        server = self.servers[ctx.guild.id]
+        if not server.is_absen:
+            await ctx.send(
+                "Maaf {}, absensi sedang tidak dimulai".format(ctx.author.mention)
+            )
+        else:
+            fullname = ctx.author.nick
+            nama,npm = fullname.split("-")
+            await ctx.send('{}, anda sudah absen jangan pergi sebelum durasi selesai'.format(ctx.author.mention))
+            server.add_absentee({ctx.author, Mahasiswa(npm,nama)})
+            self.handle_mahasiswa_offline(ctx.guild.id)
+
+    def handle_mahasiswa_offline(self,server_id):
+        server = self.server[server_id]
+        channel = client.get_channel(server_id)
+        await channel.send('test')
