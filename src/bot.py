@@ -65,7 +65,7 @@ class AbsentorBot(commands.Cog):
                 "Anda juga dapat memaksa sesi absen berhenti dengan mengirimkan pesan `!absentor stop`"
             )
         else:
-            timer = Timer(time * 60, self.write_to_sheet, ctx)
+            timer = Timer(time * 60, self.__handle_absen_finished, ctx)
 
             server.start_absen(timer)
 
@@ -75,7 +75,9 @@ class AbsentorBot(commands.Cog):
             )
             await ctx.send("Waktu absen adalah {} menit".format(time))
 
-    @absentor.command(name='berhenti', aliases=['stop'])
+    """Invoke a command to stop an absen session on a server
+    """
+    @absentor.command(name='berhenti', aliases=['stop', 'selesai'])
     @commands.has_role('@botadmin')
     async def handle_stop(self, ctx):
         server = self.servers[ctx.guild.id]
@@ -89,19 +91,7 @@ class AbsentorBot(commands.Cog):
                 "Anda dapat memulai sesi absen dengan mengirimkan pesan `!absentor mulai`"
             )
         else:
-            server = self.servers[ctx.guild.id]
-
-            absentee = server.stop_absen()
-
-            await ctx.send(
-                '{}, absen telah selesai! Anda tidak dapat melakukan absen lagi pada sesi ini'.format(server.role.mention)
-            )
-            await self.write_to_sheet(ctx, absentee)
-
-    async def write_to_sheet(self, ctx, absentee):
-        self.sheet.clear_absen(date.today())
-
-        await ctx.send('Kerjaan David')
+            await self.__handle_absen_finished(ctx)
 
     @absentor.command(name='absen')
     @commands.has_role('@siswa')
@@ -113,6 +103,14 @@ class AbsentorBot(commands.Cog):
                 "Maaf {}, namun tidak ada sesi absensi yang sedang berjalan 😓".format(ctx.author.mention)
             )
         else:
+            if ctx.author.status != Status.online:
+                await ctx.send(
+                    '{}, anda harus memiliki status Discord _online_ untuk melakukan absensi 😓'.format(ctx.author.mention)
+                )
+                await ctx.send('Silahkan ubah status Discord anda ke _online_ dan kirimkan ulang perintah anda.')
+
+                return
+
             fullname = ctx.author.nick
 
             if fullname == None:
@@ -135,11 +133,11 @@ class AbsentorBot(commands.Cog):
                     await ctx.send("PS: Anda dapat memiliki nama khusus untuk server ini saja 😉")
                 else:
                     await ctx.send(
-                        "{}, anda sudah diabsen oleh absentor.".format(ctx.author.mention)  
+                        "{}, anda telah berhasil diabsen oleh absentor.".format(ctx.author.mention)  
                     )
                     await ctx.send("Mohon untuk tetap _online_ sampai sesi absen selesai")
 
-                    mahasiswa = Mahasiswa(tokens.group(1), tokens.group(2))
+                    mahasiswa = Mahasiswa(tokens.group(2), tokens.group(1))
 
                     server.add_absentee(id, mahasiswa)
 
@@ -159,21 +157,43 @@ class AbsentorBot(commands.Cog):
         else:
             print(error)
 
-    async def handle_mahasiswa_offline(self,server_id):
-        server = self.servers[server_id]
-        guild = self.bot.get_guild(server_id)
-        channel = self.bot.get_channel(695181326793310269)
-        siswa_id_offline = []
-        result = ""
-        for siswa_id in server.get_absentee().keys():
-            member = guild.get_member(siswa_id)
-            if member.status == Status.offline:
-                result += '{}'.format(member.mention)
-                siswa_id_offline.append(siswa_id)
+    """Handler function when absen session is finished
+    """
+    async def __handle_absen_finished(self, ctx):
+        server = self.servers[ctx.guild.id]
 
-        for siswa_id in siswa_id_offline:
-            server.delete_entry(siswa_id)
+        await ctx.send(
+            "{}, sesi absen telah selesai! Anda tidak dapat melakukan absen lagi pada sesi ini".format(server.role.mention)
+        )
 
-        if result != "":
-            result += "\n anda tidak diabsen karena anda offline sebelum durasi berakhir"
-            await channel.send(result)
+        server.stop_absen()
+        self.sheet.clear_absen(date.today())
+
+        absentee = server.absentee
+        mahasiswas = []
+
+        for id in absentee:
+            member = ctx.guild.get_member(id)
+
+            if member != None and member.status == Status.online:
+                mahasiswas.append(absentee[id])
+
+        absentee_str = ""
+
+        for mahasiswa in mahasiswas:
+            if len(absentee_str) > 0:
+                absentee_str += "\n\r"
+
+            absentee_str += ("**{} <{}>**".format(mahasiswa.name, mahasiswa.npm))
+
+        if len(absentee_str) == 0:
+            absentee_str = "Tidak ada yang berhasil melakukan absensi pada sesi absen ini 😥"
+        else:
+            await ctx.send("Berikut merupakan daftar mahasiswa yang berhasil melakukan absensi:")
+
+        await ctx.send(absentee_str)
+        await ctx.send(
+            "Catatan: Merubah status menjadi tidak _online_ sebelum sesi absen berakhir mengakibatkan mahasiswa dianggap tidak pernah absen."
+        )
+
+        self.sheet.batch_absen(date.today(), mahasiswas)

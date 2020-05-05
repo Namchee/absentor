@@ -20,8 +20,7 @@ class Server:
         self.absentee.clear()
         self.timer.start()
 
-    def stop_absen(self):        
-        self.timer.cancel()
-        self.timer = None
-        
-        return self.absentee
+    def stop_absen(self):
+        if self.timer != None:       
+            self.timer.cancel()
+            self.timer = None
