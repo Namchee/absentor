@@ -157,6 +157,32 @@ class AbsentorBot(commands.Cog):
         else:
             print(error)
 
+    """Show help function
+	"""
+    @absentor.command(name='help', aliases=['bantuan'])
+    async def handle_show_help(self, ctx):
+        help_str = """Ini adalah bot sederhana untuk otomatisasi proses absen.
+Cara Menggunakan: `!absentor <command / alias> <params1> <params2> <etc>`
+
+Daftar Perintah:
+1. `help`
+    - Perintah: `!absentor help`
+    - Alias: `bantuan`
+    - Fungsi: Menampilkan petunjuk penggunaan bot ini.
+2. `mulai`
+    - Perintah: `!absentor mulai`
+    - Alias: `start`, `init`
+    - Fungsi: Memulai sesi absensi. Siswa hanya bisa melakukan absen setelah perintah ini dijalankan.
+3. `absen`
+	- Perintah: `!absentor absen`
+    - Fungsi: Memberi tahu bot kehadiran anda untuk dicatat di absensi.
+4. `stop`
+    - Perintah: `!absentor stop`
+    - Alias: `berhenti`, `selesai`
+    - Fungsi: Menutup sesi absen. Setelah sesi absen ditutup siswa tidak akan bisa melakukan absen."""
+
+        return await ctx.send(help_str)
+
     """Handler function when absen session is finished
     """
     async def __handle_absen_finished(self, ctx):
@@ -197,3 +223,6 @@ class AbsentorBot(commands.Cog):
         )
 
         self.sheet.batch_absen(date.today(), mahasiswas)
+
+   
+        
