@@ -52,5 +52,6 @@ Melanggar ketentuan tersebut dapat mengakibatkan _pull request_ anda tertolak :e
 2. Fariz Armesta - [GitHub](https://github.com/Farizarmesta)
 3. Steren Lie - [GitHub](https://github.com/Sterennn)
 4. Stephen Hadi - [Github](https://github.com/stephenhadi)
+5. David Christoper Sentosa - [Github](https://github.com/davidatz285)
 
 PS: Penambahan kontributor hanya akan dilakukan bila anda melakukan _meaningful commit_ pada project ini
