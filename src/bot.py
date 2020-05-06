@@ -223,6 +223,3 @@ Daftar Perintah:
         )
 
         self.sheet.batch_absen(date.today(), mahasiswas)
-
-   
-        
