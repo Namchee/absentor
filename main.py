@@ -5,7 +5,6 @@ from dotenv import load_dotenv, find_dotenv
 from gspread import authorize
 from src.bot import AbsentorBot
 from src.sheet import Sheet
-from datetime import date
 
 load_dotenv(find_dotenv())
 
@@ -36,8 +35,7 @@ bot = Bot(command_prefix="!")
 bot.add_cog(AbsentorBot(bot, sheet))
 
 def main():
-    # bot.run(environ.get("DISCORD_TOKEN"))
-    sheet.clear_absen(date.today())
+    bot.run(environ.get("DISCORD_TOKEN"))
 
 if __name__ == "__main__":
     main()
