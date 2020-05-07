@@ -123,7 +123,7 @@ class AbsentorBot(commands.Cog):
                     "{}, anda sudah terabsen sebelumnya. Anda tidak perlu absen lebih dari sekali karena absentor tidak mungkin lupa 😉.".format(ctx.author.mention)
                 )
             else:
-                tokens = match(r"(\w+) - (\d{10})", fullname)
+                tokens = match(r"([\w -]+) - (\d{10})", fullname)
 
                 if tokens == None:
                     await ctx.send(
