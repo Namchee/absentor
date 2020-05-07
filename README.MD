@@ -12,7 +12,7 @@ Sebuah _chatbot_ sederhana untuk melakukan otomatisasi absensi mahasiswa untuk p
 2. Masuk ke _root directory_ dari project ini, kemudian buatlah _virtual environment_ python dengan perintah `virtualenv <nama folder>` (namanya bebas, tapi isi saja dengan `venv`)
 3. Jalankan perintah `pip install -r requirements.txt`
 4. Sebelum _running_ program, pastikan bahwa `virtualenv` juga sedang _running_. Cara manualnya dengan menjalankan perintah `venv/Scripts/Activate` atau bila menggunakan IDE, pastikan bahwa IDE anda mendeteksi `virtualenv` tersebut dan menggunakan interpreter yang ada didalamnya. (Visual Studio Code: F1 -> Python: Select Interpreter -> pilih `<nama folder>` yang telah anda buat dalam langkah 2)
-5. Copy file `.env` dan `credentials.json` yang anda miliki ke _root_ folder dari project ini
+5. Copy file `.env` dan ~~`credentials.json`~~ (Update 7 Mei 2020, sudah tidak dibutuhkan lagi) yang anda miliki ke _root_ folder dari project ini
 6. Jalankan aplikasi dengan mengetikkan perintah `py main.py`
 
 ## FAQ
