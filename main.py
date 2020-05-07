@@ -15,7 +15,7 @@ credentials_info = {
     'type': environ.get('TYPE'),
     'project_id': environ.get('PROJECT_ID'),
     'private_key_id': environ.get('PRIVATE_KEY_ID'),
-    'private_key': environ.get('PRIVATE_KEY'),
+    'private_key': environ.get('PRIVATE_KEY').replace('\\n', '\n'),
     'client_email': environ.get('CLIENT_EMAIL'),
     'client_id': environ.get('CLIENT_ID'),
     'auth_uri': environ.get('AUTH_URI'),
